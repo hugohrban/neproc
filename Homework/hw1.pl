@@ -70,3 +70,41 @@ add(s(X), Y, s(Z)) :-
 
 less(0, s(Y)) :- nat(Y).
 less(s(X), s(Y)) :- less(X, Y).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Riesenie a) %%%%%%%%%%%%%%%%%%%%%%%
+
+% polovica (dolna cela cast)
+% Y je polovica X
+half(0,0).
+half(s(0),0).
+half(s(s(X)),s(Y)) :- 
+  half(X,Y).
+
+% dvojkovy logaritmus
+logTwo(s(0),0).
+logTwo(X,s(R)) :- 
+  half(X,Y),
+  less(Y,X),
+  logTwo(Y,R).
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Riesenie b) %%%%%%%%%%%%%%%%%%%%%%%
+
+% f_(+Index, +nulty_clen, +prvy_clen, ?vysledok_pre_Index-1, ?vysledok)
+
+generalizedFib(0, A, B, 0, A).
+generalizedFib(1, A, B, A, B).
+generalizedFib(I, A, B, Prev, Res) :-
+  T is I - 1,
+  T > 0,
+  generalizedFib(T, A, B, Prev2, Prev),
+  Res is Prev + Prev2.
+
+% f(+Index, ?Result)
+
+fib(I, Res) :-
+  generalizedFib(I, 0, 1, _, Res).
+
+
