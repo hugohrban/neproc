@@ -44,9 +44,32 @@ Domácí úlohy
 
 ### Zadané úlohy
 
+- [Unární aritmetika](https://github.com/vituscze/neproc/blob/master/Homework/hw1.pl) (do 2023-03-07)
+- [Seznamy](https://github.com/vituscze/neproc/blob/master/Homework/hw2.pl) (do 2023-03-21)
+
 
 ### Hodnocení
 
 | Jméno               | 1. | 2. | 3. | Prolog | 4. | 5. | 6. | 7. | Haskell |  Z | ZP |
 | ------------------- | --:| --:| --:|:------:| --:| --:| --:| --:|:-------:|:--:|:--:|
+| Termitronator       | 10 |    |    |        |    |    |    |    |         |    |    |
+| Adam Osuský         | 13 |    |    |        |    |    |    |    |         |    |    |
+| Tereza Ferenčíková  | 10 |    |    |        |    |    |    |    |         |    |    |
+| Adam Červenka       | 10 |    |    |        |    |    |    |    |         |    |    |
+| Josef Bálek         | 13 |    |    |        |    |    |    |    |         |    |    |
+| Hana Roubalová      | 10 |    |    |        |    |    |    |    |         |    |    |
+| aaaaa               | 10 |    |    |        |    |    |    |    |         |    |    |
+| Vojtěch Vilímek     | 14 |    |    |        |    |    |    |    |         |    |    |
+| Anna Dvořáková      |  9 |    |    |        |    |    |    |    |         |    |    |
+| Vilém Gutvald       | 11 |    |    |        |    |    |    |    |         |    |    |
+| Oliver Piter        | 10 |    |    |        |    |    |    |    |         |    |    |
+| Katarína Čičvarová  | 11 |    |    |        |    |    |    |    |         |    |    |
+| Viktor Materna      | 10 |    |    |        |    |    |    |    |         |    |    |
+| Patrik Backo        | 10 |    |    |        |    |    |    |    |         |    |    |
+| Frank Sinatra       |  9 |    |    |        |    |    |    |    |         |    |    |
+| Šárka Uramová       | 10 |    |    |        |    |    |    |    |         |    |    |
+| Patrik Broček       |  9 |    |    |        |    |    |    |    |         |    |    |
+| Rastislav Nowak     | 10 |    |    |        |    |    |    |    |         |    |    |
+| Martin Oravec       | 10 |    |    |        |    |    |    |    |         |    |    |
+| Denys Boyko         | 10 |    |    |        |    |    |    |    |         |    |    |
 
