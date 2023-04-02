@@ -46,30 +46,30 @@ Domácí úlohy
 
 - [Unární aritmetika](https://github.com/vituscze/neproc/blob/master/Homework/hw1.pl) (do 2023-03-07)
 - [Seznamy](https://github.com/vituscze/neproc/blob/master/Homework/hw2.pl) (do 2023-03-21)
+- [Prohledávání](https://github.com/vituscze/neproc/blob/master/Homework/hw3.pl) (do 2023-04-04)
 
 
 ### Hodnocení
 
 | Jméno               | 1. | 2. | 3. | Prolog | 4. | 5. | 6. | 7. | Haskell |  Z | ZP |
 | ------------------- | --:| --:| --:|:------:| --:| --:| --:| --:|:-------:|:--:|:--:|
-| Termitronator       | 10 |    |    |        |    |    |    |    |         |    |    |
-| Adam Osuský         | 13 |    |    |        |    |    |    |    |         |    |    |
-| Tereza Ferenčíková  | 10 |    |    |        |    |    |    |    |         |    |    |
-| Adam Červenka       | 10 |    |    |        |    |    |    |    |         |    |    |
-| Josef Bálek         | 13 |    |    |        |    |    |    |    |         |    |    |
-| Hana Roubalová      | 10 |    |    |        |    |    |    |    |         |    |    |
-| aaaaa               | 10 |    |    |        |    |    |    |    |         |    |    |
-| Vojtěch Vilímek     | 14 |    |    |        |    |    |    |    |         |    |    |
-| Anna Dvořáková      |  9 |    |    |        |    |    |    |    |         |    |    |
-| Vilém Gutvald       | 11 |    |    |        |    |    |    |    |         |    |    |
-| Oliver Piter        | 10 |    |    |        |    |    |    |    |         |    |    |
-| Katarína Čičvarová  | 11 |    |    |        |    |    |    |    |         |    |    |
-| Viktor Materna      | 10 |    |    |        |    |    |    |    |         |    |    |
-| Patrik Backo        | 10 |    |    |        |    |    |    |    |         |    |    |
-| Frank Sinatra       |  9 |    |    |        |    |    |    |    |         |    |    |
-| Šárka Uramová       | 10 |    |    |        |    |    |    |    |         |    |    |
-| Patrik Broček       |  9 |    |    |        |    |    |    |    |         |    |    |
-| Rastislav Nowak     | 10 |    |    |        |    |    |    |    |         |    |    |
-| Martin Oravec       | 10 |    |    |        |    |    |    |    |         |    |    |
-| Denys Boyko         | 10 |    |    |        |    |    |    |    |         |    |    |
-
+| Termitronator       | 10 |  6 |    | OK     |    |    |    |    |         |    |    |
+| Adam Osuský         | 13 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Tereza Ferenčíková  | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Ads36               | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Josef Bálek         | 13 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Hana Roubalová      | 10 |  8 |    | OK     |    |    |    |    |         |    |    |
+| aaaaa               | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Vojtěch Vilímek     | 14 |  9 |    | OK     |    |    |    |    |         |    |    |
+| Anna Dvořáková      |  9 |  9 |    | OK     |    |    |    |    |         |    |    |
+| Vilém Gutvald       | 11 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Oliver Piter        | 10 |  9 |    | OK     |    |    |    |    |         |    |    |
+| Katarína Čičvarová  | 11 |  8 |    | OK     |    |    |    |    |         |    |    |
+| Viktor Materna      | 10 |  8 |    | OK     |    |    |    |    |         |    |    |
+| Patrik Backo        | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Frank Sinatra       |  9 |  4 |    |        |    |    |    |    |         |    |    |
+| Šárka Uramová       | 10 |  6 |    | OK     |    |    |    |    |         |    |    |
+| Patrik Broček       |  9 |  8 |    | OK     |    |    |    |    |         |    |    |
+| Rastislav Nowak     | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Martin Oravec       | 10 | 10 |    | OK     |    |    |    |    |         |    |    |
+| Denys Boyko         | 10 |  8 |    | OK     |    |    |    |    |         |    |    |
