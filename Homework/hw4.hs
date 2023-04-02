@@ -19,8 +19,12 @@ rleDecode = undefined
 -- >>> take 5 primes
 -- [2,3,5,7,11]
 --
+
+isPrime :: Integer -> Bool
+isPrime x = [y | y <- [2..x-1], mod x y == 0] == []
+
 primes :: [Integer]
-primes = undefined
+primes = [x | x <- [2..], isPrime x]
 
 -- 3) Implementujte mergesort.
 

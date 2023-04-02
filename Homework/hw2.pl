@@ -59,3 +59,58 @@
 %
 % avlInsert(1, t(0, nil, 1, nil), R).
 % R = t(0, nil, 1, nil).
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% uloha a) %%%%%%%%%%%%%%%%%%%%%%%
+
+% flat(+L, ?Acc, ?R) - flattens list L into list R using accumulator Acc
+% flat(+L, ?R) - flattens list L into list R starting with empty accumulator
+
+flat([], Acc, Acc) :- !.
+
+flat([X|Y], Acc, Res) :-
+    flat(Y, Acc, Temp),
+    flat(X, Temp, Res), !.
+
+flat(X, Acc, [X|Acc]).
+
+flat(X, R) :-
+    flat(X, [], R).
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% uloha b) %%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% matrix(+L)
+
+matrix([H1|[H2|T]]) :-
+    same_length(H1,H2),
+    matrix([H2|T]), 
+    !.
+
+matrix([_]).
+
+
+% f_(+Matrix, ?Rest, ?FirstColumn)
+
+f_(X, [], []) :-
+    flat(X, []).
+
+f_([[H|F]|Y], [F|P], [H|R1]) :-
+    f_(Y, P, R1).
+
+% transp(+Matrix, ?Transposed)
+
+transp(X, []) :- 
+    flat(X, []), !.
+
+transp(X, [F|R]) :-
+    matrix(X),
+    f_(X, Rest, F),
+    transp(Rest, R).
+
