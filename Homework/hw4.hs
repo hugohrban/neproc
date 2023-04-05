@@ -6,13 +6,15 @@
 -- [(1,'h'),(1,'e'),(2,'l'),(1,'o')]
 --
 rleEncode :: (Eq a) => [a] -> [(Int, a)]
-rleEncode = undefined
+rleEncode [] = []
+rleEncode (x:xs) = (1 + length (takeWhile (x==) xs), x) : rleEncode (dropWhile (x==) xs)
 
 -- >>> rleDecode [(1,'h'),(1,'e'),(2,'l'),(1,'o')]
 -- "hello"
 --
 rleDecode :: [(Int, a)] -> [a]
-rleDecode = undefined
+rleDecode [] = []
+rleDecode ((n, ch):xs) = [ch | _ <- [1..n]] ++ rleDecode xs
 
 -- 2) Definujte nekonečný seznam všech prvočísel. Pokuste se o efektivní řešení.
 -- Poté pomocí něj definujte funkci, která v daném rozsahu najde dvojici po sobě
@@ -22,6 +24,8 @@ rleDecode = undefined
 -- [2,3,5,7,11]
 --
 
+
+-- TODO smarter
 isPrime :: Integer -> Bool
 isPrime x = [y | y <- [2..x-1], mod x y == 0] == []
 
@@ -31,8 +35,33 @@ primes = [x | x <- [2..], isPrime x]
 -- >>> gap 1000
 -- (887, 907)
 --
+
+-- finds maximum value in a list of Integers
+maxList :: [Integer] -> Integer
+maxList [] = undefined
+maxList [x] = x
+maxList (x:xs) = max x (maxList xs)
+
+-- returns index of maximum
+argMax :: [Integer] -> Integer
+argMax [] = undefined
+argMax [x] = 0
+argMax (x:xs)
+    | x < maxList xs = 1 + argMax xs
+    | otherwise = 0
+
+-- returns list of gaps between every pair of adjancent Integers
+gaps :: [Integer] -> [Integer]
+gaps xs = [xs !! i - xs !! (i-1) | i <- [1..(length xs - 1)]]
+
 gap :: Integer -> (Integer, Integer)
-gap = undefined
+gap n = 
+    let 
+        p = takeWhile (<=n) primes
+        ix_max = fromIntegral (argMax (gaps p))
+    in 
+        (p !! ix_max,
+         p !! (ix_max + 1))
 
 -- Prvním argumentem je konec rozsahu, začátek bude vždy 2. Můžete předpokládat,
 -- že konec bude alespoň 3.
@@ -40,10 +69,24 @@ gap = undefined
 -- 3) Implementujte mergesort, který vyhazuje duplikáty.
 
 mergeWith :: (a -> a -> Ordering) -> [a] -> [a] -> [a]
-mergeWith = undefined
+mergeWith comp [] ys = ys
+mergeWith comp xs [] = xs
+mergeWith comp (x:xs) (y:ys)
+    | x `comp` y == LT = x : mergeWith comp xs (y:ys)
+    | x `comp` y == GT = y : mergeWith comp (x:xs) ys
+    | otherwise = x : mergeWith comp xs ys
+
 
 sortWith  :: (a -> a -> Ordering) -> [a] -> [a]
-sortWith = undefined
+sortWith comp [] = []
+sortWith comp [x] = [x]
+sortWith comp xs = 
+    let 
+        half = length xs `div` 2
+    in
+        mergeWith comp 
+        (sortWith comp (take half xs))
+        (sortWith comp (drop half xs))
 
 -- Prvním argumentem je funkce, která provádí porovnávání.
 -- Ordering je datový typ, který obsahuje 3 konstanty: LT, EQ, GT
@@ -68,8 +111,12 @@ sortWith = undefined
 -- >>> combinations 2 "abcd"
 -- ["ab","ac","ad","bc","bd","cd"]
 --
-combinations :: Int -> [a] -> [[a]]
-combinations = undefined
+
+combi :: Int -> [a] -> [[a]]
+combi 0 _ = [[]]
+combi _ [] = []
+combi n (x:xs) = [x:cxs | cxs <- combi (n-1) xs] ++ combi n xs
+
 
 -- permutations x vygeneruje seznam všech permutací. Na pořadí permutací ve
 -- výsledném seznamu nezáleží.
@@ -77,8 +124,18 @@ combinations = undefined
 -- >>> permutations "abc"
 -- ["abc","bac","bca","acb","cab","cba"]
 --
-permutations :: [a] -> [[a]]
-permutations = undefined
+
+insertEverywhere :: a -> [a] -> [[a]]
+insertEverywhere x [] = [[x]]
+insertEverywhere x xs = [take i xs ++ [x] ++ drop i xs | i <- [0..length xs]]
+
+perm :: [a] -> [[a]]
+perm [] = []
+perm [x] = [[x]]
+perm (x:xs) = concat [insertEverywhere x px | px <- perm xs]
+
+
+
 
 -- Pomocí těchto funkcí definujte "variace" (občas najdete v české literatuře,
 -- v angličtině pro to termín asi neexistuje): kombinace, kde záleží na pořadí
@@ -86,5 +143,8 @@ permutations = undefined
 -- >>> variations 2 "abc"
 -- ["ab","ba","ac","ca","bc","cb"]
 --
+
 variations :: Int -> [a] -> [[a]]
-variations = undefined
+variations 0 _ = [[]]
+variations _ [] = []
+variations n xs = concat [perm ys | ys <- combi n xs]
