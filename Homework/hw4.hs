@@ -58,12 +58,11 @@ gaps xs = [xs !! i - xs !! (i-1) | i <- [1..(length xs - 1)]]
 
 gap :: Integer -> (Integer, Integer)
 gap n = 
-    let 
+    (p !! ix_max, p !! (ix_max + 1))
+    where
         p = takeWhile (<=n) primes
         ix_max = fromIntegral (argMax (gaps p))
-    in 
-        (p !! ix_max,
-         p !! (ix_max + 1))
+     
 
 -- Prvním argumentem je konec rozsahu, začátek bude vždy 2. Můžete předpokládat,
 -- že konec bude alespoň 3.
@@ -83,12 +82,11 @@ sortWith  :: (a -> a -> Ordering) -> [a] -> [a]
 sortWith comp [] = []
 sortWith comp [x] = [x]
 sortWith comp xs = 
-    let 
+    mergeWith comp 
+    (sortWith comp (take half xs))
+    (sortWith comp (drop half xs))
+    where 
         half = length xs `div` 2
-    in
-        mergeWith comp 
-        (sortWith comp (take half xs))
-        (sortWith comp (drop half xs))
 
 -- Prvním argumentem je funkce, která provádí porovnávání.
 -- Ordering je datový typ, který obsahuje 3 konstanty: LT, EQ, GT
