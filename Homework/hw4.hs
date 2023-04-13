@@ -24,6 +24,7 @@ rleDecode ((n, ch):xs) = [ch | _ <- [1..n]] ++ rleDecode xs
 -- [2,3,5,7,11]
 --
 
+-- O(n^1.5)
 ceilSqrt :: Integer -> Integer
 ceilSqrt x = ceiling (sqrt (fromIntegral x))
 
@@ -33,6 +34,12 @@ isPrime x = [y | y <- [2..ceilSqrt x], mod x y == 0 ] == []
 
 primes :: [Integer]
 primes = [x | x <- [2..], isPrime x]
+
+-- O(n^2)
+-- primes :: [Integer]
+-- primes = sieve[2..] 
+--     where sieve (x:xs) = x : sieve [y | y <- xs, y `mod` x /= 0]
+
 
 -- >>> gap 1000
 -- (887, 907)
@@ -61,7 +68,7 @@ gap n =
     (p !! ix_max, p !! (ix_max + 1))
     where
         p = takeWhile (<=n) primes
-        ix_max = fromIntegral (argMax (gaps p))
+        ix_max = fromIntegral  (argMax (gaps p))
      
 
 -- Prvním argumentem je konec rozsahu, začátek bude vždy 2. Můžete předpokládat,
@@ -129,11 +136,11 @@ insertEverywhere :: a -> [a] -> [[a]]
 insertEverywhere x [] = [[x]]
 insertEverywhere x xs = [take i xs ++ [x] ++ drop i xs | i <- [0..length xs]]
 
+
 perm :: [a] -> [[a]]
 perm [] = []
 perm [x] = [[x]]
 perm (x:xs) = concat [insertEverywhere x px | px <- perm xs]
-
 
 
 
