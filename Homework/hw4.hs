@@ -25,12 +25,9 @@ rleDecode ((n, ch):xs) = [ch | _ <- [1..n]] ++ rleDecode xs
 --
 
 -- O(n^1.5)
-ceilSqrt :: Integer -> Integer
-ceilSqrt x = ceiling (sqrt (fromIntegral x))
-
--- TODO smarter
 isPrime :: Integer -> Bool
 isPrime x = [y | y <- [2..ceilSqrt x], mod x y == 0 ] == []
+    where ceilSqrt x = ceiling (sqrt (fromIntegral x))
 
 primes :: [Integer]
 primes = [x | x <- [2..], isPrime x]
