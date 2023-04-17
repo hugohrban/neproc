@@ -24,18 +24,13 @@ rleDecode ((n, ch):xs) = [ch | _ <- [1..n]] ++ rleDecode xs
 -- [2,3,5,7,11]
 --
 
--- O(n^1.5)
+-- O(n^1.5) for `take n primes`
 isPrime :: Integer -> Bool
 isPrime x = [y | y <- [2..ceilSqrt x], mod x y == 0 ] == []
     where ceilSqrt x = ceiling (sqrt (fromIntegral x))
 
 primes :: [Integer]
-primes = [x | x <- [2..], isPrime x]
-
--- O(n^2)
--- primes :: [Integer]
--- primes = sieve[2..] 
---     where sieve (x:xs) = x : sieve [y | y <- xs, y `mod` x /= 0]
+primes = 2 : [x | x <- [3..], isPrime x]
 
 
 -- >>> gap 1000
@@ -73,6 +68,19 @@ gap n =
 
 -- 3) Implementujte mergesort, který vyhazuje duplikáty.
 
+-- Prvním argumentem je funkce, která provádí porovnávání.
+-- Ordering je datový typ, který obsahuje 3 konstanty: LT, EQ, GT
+-- (less than, equal, greater than).
+--
+-- >>> sortWith compare [10,9..1]
+-- [1,2,3,4,5,6,7,8,9,10]
+--
+-- >>> sortWith (flip compare) [10,9..1]
+-- [10,9,8,7,6,5,4,3,2,1]
+--
+-- >>> sortWith compare [1,1,1]
+-- [1]
+
 mergeWith :: (a -> a -> Ordering) -> [a] -> [a] -> [a]
 mergeWith comp [] ys = ys
 mergeWith comp xs [] = xs
@@ -91,19 +99,6 @@ sortWith comp xs =
     (sortWith comp (drop half xs))
     where 
         half = length xs `div` 2
-
--- Prvním argumentem je funkce, která provádí porovnávání.
--- Ordering je datový typ, který obsahuje 3 konstanty: LT, EQ, GT
--- (less than, equal, greater than).
---
--- >>> sortWith compare [10,9..1]
--- [1,2,3,4,5,6,7,8,9,10]
---
--- >>> sortWith (flip compare) [10,9..1]
--- [10,9,8,7,6,5,4,3,2,1]
---
--- >>> sortWith compare [1,1,1]
--- [1]
 --
 -- BONUS)
 --
@@ -116,10 +111,10 @@ sortWith comp xs =
 -- ["ab","ac","ad","bc","bd","cd"]
 --
 
-combi :: Int -> [a] -> [[a]]
-combi 0 _ = [[]]
-combi _ [] = []
-combi n (x:xs) = [x:cxs | cxs <- combi (n-1) xs] ++ combi n xs
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations _ [] = []
+combinations n (x:xs) = [x:cxs | cxs <- combinations (n-1) xs] ++ combinations n xs
 
 
 -- permutations x vygeneruje seznam všech permutací. Na pořadí permutací ve
@@ -134,10 +129,10 @@ insertEverywhere x [] = [[x]]
 insertEverywhere x xs = [take i xs ++ [x] ++ drop i xs | i <- [0..length xs]]
 
 
-perm :: [a] -> [[a]]
-perm [] = []
-perm [x] = [[x]]
-perm (x:xs) = concat [insertEverywhere x px | px <- perm xs]
+permutations :: [a] -> [[a]]
+permutations [] = []
+permutations [x] = [[x]]
+permutations (x:xs) = concat [insertEverywhere x px | px <- permutations xs]
 
 
 
@@ -151,4 +146,4 @@ perm (x:xs) = concat [insertEverywhere x px | px <- perm xs]
 variations :: Int -> [a] -> [[a]]
 variations 0 _ = [[]]
 variations _ [] = []
-variations n xs = concat [perm ys | ys <- combi n xs]
+variations n xs = concat [permutations ys | ys <- combinations n xs]
