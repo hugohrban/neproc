@@ -72,10 +72,8 @@ insert = insertWith const
 
 find :: (Ord k) => [k] -> Trie k v -> Maybe v
 find [] (Trie v ts) = v
-find (k:ks) (Trie v ts)
-    | k `notElem` map fst ts = Nothing
-    | otherwise = find ks subtrie
-        where subtrie = fst $ childSplit (Trie v ts) k
+find (k:ks) (Trie v ts) = find ks subtrie
+    where (subtrie, _) = childSplit (Trie v ts) k
 
 -- 'find k t' vrátí hodnotu odpovídající klíči 'k' (jako 'Just v'), pokud
 -- existuje, jinak 'Nothing'.
