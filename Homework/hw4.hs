@@ -26,8 +26,8 @@ rleDecode ((n, ch):xs) = [ch | _ <- [1..n]] ++ rleDecode xs
 
 -- O(n^1.5) for `take n primes`
 isPrime :: Integer -> Bool
-isPrime x = [y | y <- [2..ceilSqrt x], mod x y == 0 ] == []
-    where ceilSqrt x = ceiling (sqrt (fromIntegral x))
+isPrime x =  [y | y <- [2..ceilSqrt], x `mod` y == 0] == []
+    where ceilSqrt = ceiling (sqrt (fromIntegral x))
 
 primes :: [Integer]
 primes = 2 : [x | x <- [3..], isPrime x]
@@ -56,12 +56,12 @@ gaps :: [Integer] -> [Integer]
 gaps xs = [xs !! i - xs !! (i-1) | i <- [1..(length xs - 1)]]
 
 gap :: Integer -> (Integer, Integer)
-gap n = 
+gap n =
     (p !! ix_max, p !! (ix_max + 1))
     where
         p = takeWhile (<=n) primes
         ix_max = fromIntegral  (argMax (gaps p))
-     
+
 
 -- Prvním argumentem je konec rozsahu, začátek bude vždy 2. Můžete předpokládat,
 -- že konec bude alespoň 3.
@@ -93,11 +93,11 @@ mergeWith comp (x:xs) (y:ys)
 sortWith  :: (a -> a -> Ordering) -> [a] -> [a]
 sortWith comp [] = []
 sortWith comp [x] = [x]
-sortWith comp xs = 
-    mergeWith comp 
+sortWith comp xs =
+    mergeWith comp
     (sortWith comp (take half xs))
     (sortWith comp (drop half xs))
-    where 
+    where
         half = length xs `div` 2
 --
 -- BONUS)
