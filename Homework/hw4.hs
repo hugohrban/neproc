@@ -55,6 +55,9 @@ argMax (x:xs)
 gaps :: [Integer] -> [Integer]
 gaps xs = [xs !! i - xs !! (i-1) | i <- [1..(length xs - 1)]]
 
+-- >>> rleEncode (map gap [3 .. 1000])
+-- [(2,(2,3)),(6,(3,5)),(18,(7,11)),(68,(23,29)),(30,(89,97)),(414,(113,127)),(366,(523,541)),(94,(887,907))]
+--
 gap :: Integer -> (Integer, Integer)
 gap n =
     (p !! ix_max, p !! (ix_max + 1))
