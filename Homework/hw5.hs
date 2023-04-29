@@ -1,14 +1,20 @@
-import Data.Maybe (isJust)
+import Data.Maybe (isJust, isNothing)
 -- 5. úloha
 --
 -- 1) Definujte datový typ 'Trie k v' reprezentující trii, kde klíče (řetězce)
 -- jsou typu '[k]' a hodnoty typu 'v'.
 
-data Trie k v = Nil | Trie (Maybe v) [(k, Trie k v)]  deriving (Show)
+data Trie k v = Trie (Maybe v) [(k, Trie k v)]  deriving (Show)
+
 -- Implementujte následující:
 
 empty :: Trie k v
-empty = Nil
+empty = Trie Nothing []
+
+isEmpty :: Trie k v -> Bool
+isEmpty (Trie v ts)
+    | isNothing v && null ts = True
+    | otherwise = False
 
 -- 'empty' je jednoduše konstanta, reprezentující prádznou trii.
 --
@@ -30,7 +36,7 @@ singleton (k:ks) v = Trie Nothing [(k, singleton ks v)]
 --      second element is list of remaining children (subtries)
 childSplit :: (Ord k) => Trie k v -> k -> (Trie k v, [(k, Trie k v)])
 childSplit (Trie v ts) k
-    | k `notElem` map fst ts = (Nil, ts)
+    | k `notElem` map fst ts = (empty, ts)
     | otherwise = ( snd $ head $ filter (\x -> fst x == k) ts,
                     filter (\x -> fst x /= k) ts)
 
@@ -38,9 +44,11 @@ childSplit (Trie v ts) k
 insertWith :: (Ord k) => (v -> v -> v) -> [k] -> v -> Trie k v -> Trie k v
 insertWith f [] v (Trie Nothing ts) = Trie (Just v) ts
 insertWith f [] v (Trie (Just v') ts) = Trie (Just (f v v')) ts
-insertWith f ks v Nil = singleton ks v
-insertWith f (k:ks) v (Trie v' ts) = Trie v' ((k, insertWith f ks v child):rest)
-    where (child, rest) = childSplit (Trie v' ts) k
+insertWith f (k:ks) v t
+    | isEmpty t = singleton (k:ks) v
+    | otherwise = Trie v' ((k, insertWith f ks v child):rest)
+        where (child, rest) = childSplit t k
+              (Trie v' ts) = t
 
 
 -- 'insertWith f ks new t' vloží klíč 'ks' s hodnotou 'new' do trie 't'. Pokud
@@ -63,7 +71,6 @@ insert = insertWith const
 --
 
 find :: (Ord k) => [k] -> Trie k v -> Maybe v
-find _ Nil = Nothing
 find [] (Trie v ts) = v
 find (k:ks) (Trie v ts)
     | k `notElem` map fst ts = Nothing
@@ -88,7 +95,7 @@ member k t = isJust (find k t)
 -- Funkce 'fromList' není nutná, ale může se vám hodit pro testování.
 
 fromList :: (Ord k) => [([k], v)] -> Trie k v
-fromList = foldr (\(k,v) t -> insert k v t) Nil
+fromList = foldr (\(k,v) t -> insert k v t) empty
 
 -- BONUS) Implementujte funkci
 
