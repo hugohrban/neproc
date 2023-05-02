@@ -119,6 +119,7 @@ removeNode (k:ks) (Trie v ts) = Trie v ((k, removeNode ks subtrie):rest)
 
 -- Odstraini mrtve vetve pre zadany kluc, ktory musi byt Nothing
 removeDeadEnds :: (Ord k) => [k] -> Trie k v -> Trie k v
+removeDeadEnds [] t = t
 removeDeadEnds ks t
     | member ks t = t
     | not $ null $ getChildren ks t  = t
