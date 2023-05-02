@@ -1,4 +1,5 @@
 import Data.Maybe (isJust, isNothing)
+import Control.Monad.Trans.Cont (resetT)
 -- 5. úloha
 --
 -- 1) Definujte datový typ 'Trie k v' reprezentující trii, kde klíče (řetězce)
@@ -32,7 +33,7 @@ singleton (k:ks) v = Trie Nothing [(k, singleton ks v)]
 --
 
 -- returns tuple: 
---      first element is subtrie with key k (there should be only one) or Nil, 
+--      first element is subtrie with key k (there should be only one) or empty, 
 --      second element is list of remaining children (subtries)
 childSplit :: (Ord k) => Trie k v -> k -> (Trie k v, [(k, Trie k v)])
 childSplit (Trie v ts) k
@@ -97,8 +98,36 @@ fromList = foldr (\(k,v) t -> insert k v t) empty
 
 -- BONUS) Implementujte funkci
 
+setToNothing :: (Ord k) => [k] -> Trie k v -> Trie k v
+setToNothing [] (Trie v ts) = Trie Nothing ts
+setToNothing (k:ks) (Trie v ts)
+    | not (member (k:ks) (Trie v ts)) = Trie v ts
+    | otherwise = Trie v ((k, setToNothing ks subtrie):rest)
+        where (subtrie, rest) = childSplit (Trie v ts) k
+
+getChildren :: (Ord k) => [k] -> Trie k v -> [(k, Trie k v)]
+getChildren [] (Trie v ts) = ts
+getChildren (k:ks) (Trie v ts) = getChildren ks subtrie
+    where (subtrie, _) = childSplit (Trie v ts) k
+
+-- Vymaze hocijaky uzol a vsetko pod nim, bez ohladu na jeho hodnotu
+removeNode :: (Ord k) => [k] -> Trie k v -> Trie k v
+removeNode [] (Trie v ts) = Trie Nothing []
+removeNode [k] (Trie v ts) = Trie v (filter (\x -> fst x /= k) ts)
+removeNode (k:ks) (Trie v ts) = Trie v ((k, removeNode ks subtrie):rest)
+    where (subtrie, rest) = childSplit (Trie v ts) k
+
+-- Odstraini mrtve vetve pre zadany kluc, ktory musi byt Nothing
+removeDeadEnds :: (Ord k) => [k] -> Trie k v -> Trie k v
+removeDeadEnds ks t
+    | member ks t = t
+    | not $ null $ getChildren ks t  = t
+    | not $ null siblings = removeNode ks t
+    | otherwise = removeDeadEnds (init ks) $ removeNode ks t
+        where siblings = filter (\x -> fst x /= last ks) $ getChildren (init ks) t
+
 delete :: (Ord k) => [k] -> Trie k v -> Trie k v
-delete = undefined
+delete ks t = removeDeadEnds ks $ setToNothing ks t
 
 -- 'delete ks t' smaže klíč 'ks' (a odpovídající hodnotu) z trie 't', pokud
 -- klíč 'ks' není v trii obsažený, 'delete' vrátí původní trii.
