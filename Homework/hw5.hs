@@ -1,5 +1,4 @@
 import Data.Maybe (isJust, isNothing)
-import Control.Monad.Trans.Cont (resetT)
 -- 5. úloha
 --
 -- 1) Definujte datový typ 'Trie k v' reprezentující trii, kde klíče (řetězce)
@@ -13,9 +12,7 @@ empty :: Trie k v
 empty = Trie Nothing []
 
 isEmpty :: Trie k v -> Bool
-isEmpty (Trie v ts)
-    | isNothing v && null ts = True
-    | otherwise = False
+isEmpty (Trie v ts) = isNothing v && null ts
 
 -- 'empty' je jednoduše konstanta, reprezentující prádznou trii.
 --
